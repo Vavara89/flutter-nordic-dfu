@@ -281,7 +281,10 @@ public class FlutterNordicDfuPlugin implements MethodCallHandler {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                final NotificationManager manager = (NotificationManager) registrar.activity().getSystemService(Context.NOTIFICATION_SERVICE);
+                if (registrar == null) return;
+                final Activity act = registrar.activity();
+                if (act == null) return;
+                final NotificationManager manager = (NotificationManager) act.getSystemService(Context.NOTIFICATION_SERVICE);
                 if (manager != null)
                     manager.cancel(DfuService.NOTIFICATION_ID);
             }
